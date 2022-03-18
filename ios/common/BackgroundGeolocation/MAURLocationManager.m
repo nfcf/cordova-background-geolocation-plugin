@@ -32,7 +32,15 @@ static NSString *const Domain = @"com.marianhello";
         locationManager = [[CLLocationManager alloc] init];
 
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
-            locationManager.allowsBackgroundLocationUpdates = YES;
+            /* iOS 9 requires setting allowsBackgroundLocationUpdates to YES in order to receive background location updates.
+            We only set it to YES if the location background mode is enabled for this app, as the documentation suggests it is a
+            fatal programmer error otherwise. */
+            NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+            if ([backgroundModes containsObject:@"location"]) {
+                if (@available(iOS 9, *)) {
+                    [locationManager setAllowsBackgroundLocationUpdates:YES];
+                }
+            }
         }
 
         locationManager.delegate = self;
