@@ -3,7 +3,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-background-geolocation-plugin"
-        version="2.0.4">
+        version="2.0.4b">
     <name>cordova-background-geolocation-plugin</name>
     <description>Cordova Background Geolocation Plugin</description>
     <license>Apache-2.0</license>
@@ -222,6 +222,7 @@
         <!-- required background modes:  App registers for location updates -->
         <preference name="ALWAYS_USAGE_DESCRIPTION" default="This app always requires location tracking" />
         <preference name="MOTION_USAGE_DESCRIPTION" default="This app requires motion detection" />
+        <preference name="BACKGROUND_MODE_LOCATION" default="&lt;string&gt;location&lt;/string&gt;" />
 
         <config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
             <string>$ALWAYS_USAGE_DESCRIPTION</string>
@@ -236,9 +237,10 @@
             <string>$MOTION_USAGE_DESCRIPTION</string>
         </config-file>
 
+        <!-- required background modes: App registers for location updates -->
         <config-file target="*-Info.plist" parent="UIBackgroundModes">
             <array>
-                <string>location</string>
+                $BACKGROUND_MODE_LOCATION
             </array>
         </config-file>
 
